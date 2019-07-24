@@ -72,3 +72,5 @@ loginRouter.get(
     );
   }
 );
+
+module.exports = loginRouter;
