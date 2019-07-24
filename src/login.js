@@ -66,9 +66,9 @@ loginRouter.get(
     // TODO: add to database
 
     response.redirect(
-      `exp://exp.host/@melissastock/front-end/?display_name=${savedUserData.userScreenName}&user_name=${
-        savedUserData.userName
-      }&id=${savedUserData.userId}`
+      `exp://4z-ggk.jagdeepsing.react-native-frontend.exp.direct:80/?display_name=${
+        savedUserData.userScreenName
+      }&user_name=${savedUserData.userName}&id=${savedUserData.userId}`
     );
   }
 );
