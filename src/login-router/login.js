@@ -3,10 +3,12 @@
 require('dotenv').config();
 
 const express = require('express');
-const loginRouter = express.Router();
-
 const passport = require('passport');
 const Strategy = require('passport-twitter').Strategy;
+
+const createUser = require('../create-user/create-user');
+
+const loginRouter = express.Router();
 
 let trustProxy = false;
 if (process.env.DYNO) {
@@ -47,23 +49,19 @@ loginRouter.get(
   '/oauth/callback',
   passport.authenticate('twitter', { failureRedirect: '/login/twitter' }),
   (request, response) => {
-    const sessionId = request.sessionID;
-    const sessionData = request.sessionStore.sessions[sessionId];
+    const sessionData = request.sessionStore.sessions[request.sessionID];
     const oAuthData = JSON.parse(sessionData)['oauth:twitter'];
 
-    const userData = request.user._json;
-
-    const savedUserData = {
-      userId: userData.id,
-      userName: userData.name,
-      userScreenName: userData.screen_name,
-      photoLink: request.user.photos[0].value,
-      oAuthToken: request.query.oauth_token,
-      oAuthVerifier: request.query.oauth_verifier,
-      oAuthTokenSecret: oAuthData.oauth_token_secret,
+    const userData = {
+      user_id: request.user._json.id,
+      display_name: request.user._json.name,
+      user_handle: request.user._json.screen_name,
+      photo_link: request.user.photos[0].value,
+      token: request.query.oauth_token,
+      token_secret: oAuthData.oauth_token_secret,
     };
 
-    // TODO: add to database
+    createUser(userData);
 
     response.redirect(
       `exp://4z-ggk.jagdeepsing.react-native-frontend.exp.direct:80/?display_name=${
