@@ -14,8 +14,7 @@ module.exports = (userData) => {
 
   return queryDB(ADD_USER_QUERY, userDataForQuery)
     .then((result) => {
-      console.log(result);
-      return true;
+      return result.rows[0].row;
     })
     .catch((error) => {
       console.error('add user error', error);
