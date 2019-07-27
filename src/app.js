@@ -11,7 +11,11 @@ const app = express();
 app.use(express.static('public'));
 app.use(require('morgan')('combined'));
 app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
+app.use(require('express-session')({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: true, 
+  saveUninitialized: true 
+}));
 // -----------------------------------------------------------------------
 
 app.use('/', loginRouter);
