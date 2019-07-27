@@ -48,7 +48,7 @@ loginRouter.get('/login/twitter', passport.authenticate('twitter'), (request, re
 loginRouter.get(
   '/oauth/callback',
   passport.authenticate('twitter', { failureRedirect: '/login/twitter' }),
-  (request, response) => {
+  async (request, response) => {
     const sessionData = request.sessionStore.sessions[request.sessionID];
     const oAuthData = JSON.parse(sessionData)['oauth:twitter'];
 
@@ -60,8 +60,9 @@ loginRouter.get(
       token: request.query.oauth_token,
       token_secret: oAuthData.oauth_token_secret,
     };
-
-    console.log(createUser(userData));
+    
+    const dataFromDB = await createUser(userData);
+    console.log(dataFromDB);
 
     response.redirect(
       `exp://4z-ggk.jagdeepsing.react-native-frontend.exp.direct:80/?display_name=${userData.display_name}&user_name=${userData.user_handle}&id=${userData.user_id}`
