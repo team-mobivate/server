@@ -61,7 +61,7 @@ loginRouter.get(
       token_secret: oAuthData.oauth_token_secret,
     };
 
-    createUser(userData);
+    console.log(createUser(userData));
 
     response.redirect(
       `exp://4z-ggk.jagdeepsing.react-native-frontend.exp.direct:80/?display_name=${userData.display_name}&user_name=${userData.user_handle}&id=${userData.user_id}`
