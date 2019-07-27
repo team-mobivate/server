@@ -1,6 +1,6 @@
 const queryDB = require('../database-interactions/query-postgres');
 
-const ADD_USER_QUERY = `INSERT INTO users (user_id, display_name, user_handle, photo_link, token, token_secret) VALUES ($1, $2, $3, $4);`;
+const ADD_USER_QUERY = `INSERT INTO users (user_id, display_name, user_handle, photo_link, token, token_secret) VALUES ($1, $2, $3, $4, $5, $6);`;
 
 module.exports = (userData) => {
   const userDataForQuery = [
